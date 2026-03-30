@@ -1,0 +1,114 @@
+[
+  {
+    "id": "day-001",
+    "prompt_zh": "你在星巴克，想点一杯热美式，不加糖。",
+    "prompt_en": "You're at Starbucks. Order a hot Americano, no sugar.",
+    "difficulty": "beginner",
+    "category": "coffee_shop",
+    "culture_tip": "In China, the barista might ask '要大杯还是中杯？' (dà bēi háishì zhōng bēi?) — 'Grande or medium?' Chinese Starbucks sizes work differently!"
+  },
+  {
+    "id": "day-002",
+    "prompt_zh": "出租车司机问你去哪里，告诉他你要去最近的地铁站。",
+    "prompt_en": "The taxi driver asks where you're going. Tell him you want to go to the nearest metro station.",
+    "difficulty": "beginner",
+    "category": "taxi",
+    "culture_tip": "Many Chinese taxi drivers will try to chat with you! '你是哪国人？' (nǐ shì nǎ guó rén?) — 'What country are you from?' is a very common question."
+  },
+  {
+    "id": "day-003",
+    "prompt_zh": "你在餐馆，想问服务员有没有不辣的菜。",
+    "prompt_en": "You're at a restaurant. Ask the waiter if they have any non-spicy dishes.",
+    "difficulty": "beginner",
+    "category": "restaurant",
+    "culture_tip": "'不要辣' (bú yào là) literally means 'don't want spicy.' But in Sichuan, even '微辣' (wēi là / slightly spicy) can be intense for foreigners!"
+  },
+  {
+    "id": "day-004",
+    "prompt_zh": "你的中国同事问你周末做了什么，告诉他你去爬山了。",
+    "prompt_en": "Your Chinese colleague asks what you did this weekend. Tell them you went hiking.",
+    "difficulty": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "day-005",
+    "prompt_zh": "你在菜市场买水果，问老板西瓜多少钱一斤。",
+    "prompt_en": "You're at the fruit market. Ask the vendor how much watermelon costs per jin (500g).",
+    "difficulty": "beginner",
+    "category": "market",
+    "culture_tip": "China uses 斤 (jīn) not kilograms for produce. 1 斤 = 500 grams. '多少钱一斤？' (duōshao qián yì jīn?) is the magic phrase!"
+  },
+  {
+    "id": "day-006",
+    "prompt_zh": "你感冒了，去药店买感冒药，告诉店员你的症状。",
+    "prompt_en": "You have a cold. Go to the pharmacy and describe your symptoms to buy cold medicine.",
+    "difficulty": "intermediate",
+    "category": "hospital"
+  },
+  {
+    "id": "day-007",
+    "prompt_zh": "你要迟到了，给同事发微信说你在路上，大概还要20分钟。",
+    "prompt_en": "You're running late. Send a WeChat message to your colleague saying you're on the way and need about 20 more minutes.",
+    "difficulty": "beginner",
+    "category": "business",
+    "culture_tip": "'在路上了' (zài lù shàng le) is the universal Chinese excuse — it literally means 'already on the road.' Everyone uses it, even if they haven't left yet 😄"
+  },
+  {
+    "id": "day-008",
+    "prompt_zh": "商务晚宴上，你的中国合作伙伴给你倒酒，你想礼貌地拒绝。",
+    "prompt_en": "At a business dinner, your Chinese partner pours you a drink. You want to politely decline.",
+    "difficulty": "intermediate",
+    "category": "business",
+    "culture_tip": "Declining a drink in China requires finesse. '不好意思，我明天一早有飞机' (sorry, I have an early flight tomorrow) is a face-saving excuse that works well."
+  },
+  {
+    "id": "day-009",
+    "prompt_zh": "你想在淘宝上买东西，问中国朋友怎么用。",
+    "prompt_en": "You want to buy something on Taobao. Ask your Chinese friend how to use it.",
+    "difficulty": "intermediate",
+    "category": "social"
+  },
+  {
+    "id": "day-010",
+    "prompt_zh": "打电话给房东，告诉他空调坏了，请他找人来修。",
+    "prompt_en": "Call your landlord and tell them the AC is broken. Ask them to send someone to fix it.",
+    "difficulty": "intermediate",
+    "category": "free"
+  },
+  {
+    "id": "day-011",
+    "prompt_zh": "春节到了，给你的中国朋友发一条拜年的微信。",
+    "prompt_en": "It's Chinese New Year! Send a festive greeting message to your Chinese friend on WeChat.",
+    "difficulty": "beginner",
+    "category": "family",
+    "culture_tip": "春节快乐 (chūn jié kuài lè) works, but 新年快乐，万事如意 adds warmth. For elders, add 身体健康 (shēntǐ jiànkāng — good health)."
+  },
+  {
+    "id": "day-012",
+    "prompt_zh": "你在网上看到一个很搞笑的视频，想用中文描述给朋友听。",
+    "prompt_en": "You saw a hilarious video online. Describe it to your friend in Chinese.",
+    "difficulty": "intermediate",
+    "category": "social"
+  },
+  {
+    "id": "day-013",
+    "prompt_zh": "你的中国朋友问你家乡的天气怎么样，跟中国比有什么不同。",
+    "prompt_en": "Your Chinese friend asks about the weather in your hometown and how it compares to China.",
+    "difficulty": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "day-014",
+    "prompt_zh": "你要搬家了，需要叫一辆搬家公司的车。打电话预约。",
+    "prompt_en": "You're moving. Call a moving company to book a truck.",
+    "difficulty": "advanced",
+    "category": "free"
+  },
+  {
+    "id": "day-015",
+    "prompt_zh": "在公司会议上，用中文介绍你负责的项目进展。",
+    "prompt_en": "In a company meeting, present your project progress in Chinese.",
+    "difficulty": "advanced",
+    "category": "business"
+  }
+]
