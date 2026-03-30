@@ -30,6 +30,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Limit message length to prevent abuse
+    if (lastMessage.content.length > 2000) {
+      return NextResponse.json(
+        { error: "Message too long (max 2000 characters)" },
+        { status: 400 }
+      );
+    }
+
     const stream = await chatWithAI(messages, level, scenario);
 
     return new Response(stream, {

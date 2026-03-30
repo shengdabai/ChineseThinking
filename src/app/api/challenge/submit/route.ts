@@ -22,6 +22,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (userResponse.length > 2000) {
+      return NextResponse.json(
+        { error: "Response too long (max 2000 characters)" },
+        { status: 400 }
+      );
+    }
+
     if (!scenario) {
       return NextResponse.json(
         { error: "Scenario is required" },
