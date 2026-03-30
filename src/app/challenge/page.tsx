@@ -33,13 +33,22 @@ export default function ChallengePage() {
     }
   }, [level]);
 
+  const [error, setError] = useState<string | null>(null);
+
   async function loadChallenge() {
-    const res = await fetch(`/api/challenge/today?level=${level}`);
-    const data = await res.json();
-    setChallenge(data.challenge);
-    setIsSubmitted(false);
-    setFeedback("");
-    setInput("");
+    setError(null);
+    try {
+      const res = await fetch(`/api/challenge/today?level=${level}`);
+      if (!res.ok) throw new Error("Failed to load");
+      const data = await res.json();
+      setChallenge(data.challenge);
+      setIsSubmitted(false);
+      setFeedback("");
+      setInput("");
+      window.scrollTo(0, 0);
+    } catch {
+      setError("Could not load challenge. Check your connection and try again.");
+    }
   }
 
   async function handleSubmit() {
@@ -187,8 +196,20 @@ export default function ChallengePage() {
             )}
           </>
         ) : (
-          <div className="flex items-center justify-center h-40">
-            <p className="text-gray-400">Loading challenge...</p>
+          <div className="flex flex-col items-center justify-center h-40 gap-3">
+            {error ? (
+              <>
+                <p className="text-red-500 text-sm">{error}</p>
+                <button
+                  onClick={loadChallenge}
+                  className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
+                >
+                  Retry
+                </button>
+              </>
+            ) : (
+              <p className="text-gray-400">Loading challenge...</p>
+            )}
           </div>
         )}
       </div>

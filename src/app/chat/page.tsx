@@ -25,7 +25,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [level, setLevel] = useState<Level>("beginner");
   const [scenario, setScenario] = useState("free");
-  const [showSettings, setShowSettings] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -170,7 +170,7 @@ export default function ChatPage() {
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 pb-32">
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-40">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center text-gray-400">
             <p className="text-4xl mb-4">🇨🇳</p>
@@ -202,7 +202,7 @@ export default function ChatPage() {
       </div>
 
       {/* Input */}
-      <div className="fixed bottom-14 left-0 right-0 bg-white border-t border-gray-100 px-4 py-3">
+      <div className="fixed bottom-16 left-0 right-0 bg-white border-t border-gray-100 px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="max-w-2xl mx-auto flex gap-2">
           <input
             type="text"

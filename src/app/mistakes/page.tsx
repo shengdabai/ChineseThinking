@@ -14,8 +14,12 @@ export default function MistakesPage() {
   // MVP: localStorage-based mistake tracking
   const [mistakes] = useState<Mistake[]>(() => {
     if (typeof window === "undefined") return [];
-    const saved = localStorage.getItem("ct-mistakes");
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem("ct-mistakes");
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
   });
 
   return (
