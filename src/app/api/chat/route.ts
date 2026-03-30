@@ -22,6 +22,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (messages.length > 50) {
+      return NextResponse.json(
+        { error: "Too many messages (max 50)" },
+        { status: 400 }
+      );
+    }
+
+    const VALID_LEVELS = ["beginner", "intermediate", "advanced"];
+    const VALID_SCENARIOS = ["free", "coffee_shop", "taxi", "restaurant", "hospital", "market", "business", "social", "family"];
+    if (!VALID_LEVELS.includes(level)) {
+      return NextResponse.json({ error: "Invalid level" }, { status: 400 });
+    }
+    if (!VALID_SCENARIOS.includes(scenario)) {
+      return NextResponse.json({ error: "Invalid scenario" }, { status: 400 });
+    }
+
     const lastMessage = messages[messages.length - 1];
     if (!lastMessage?.content?.trim()) {
       return NextResponse.json(

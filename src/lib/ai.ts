@@ -4,8 +4,14 @@ import { getLevelPrompt } from "./prompts/levels";
 import { getScenarioPrompt } from "./prompts/scenarios";
 import type { ChatMessage, UserLevel } from "./types";
 
+let _client: OpenAI | null = null;
 function getOpenAI() {
-  return new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
+  if (!_client) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) throw new Error("Missing OPENAI_API_KEY environment variable");
+    _client = new OpenAI({ apiKey });
+  }
+  return _client;
 }
 
 export function buildSystemPrompt(
@@ -51,14 +57,19 @@ export async function chatWithAI(
   const encoder = new TextEncoder();
   return new ReadableStream({
     async start(controller) {
-      for await (const chunk of response) {
-        const text = chunk.choices[0]?.delta?.content;
-        if (text) {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+      try {
+        for await (const chunk of response) {
+          const text = chunk.choices[0]?.delta?.content;
+          if (text) {
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
+          }
         }
+        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+      } catch {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: "Stream interrupted. Please try again." })}\n\n`));
+      } finally {
+        controller.close();
       }
-      controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-      controller.close();
     },
   });
 }
@@ -72,9 +83,6 @@ export async function getChallengeFeedback(
 
 ${getLevelPrompt(level)}
 
-## Challenge scenario: ${scenario}
-## User's response: ${userResponse}
-
 Provide feedback in this exact format:
 1. 【评价】Brief encouraging comment about their attempt (in English)
 2. 【你说的】Their original text
@@ -86,7 +94,10 @@ Be warm and encouraging. Remember: confidence > perfection.`;
 
   const response = await getOpenAI().chat.completions.create({
     model: "gpt-4o-mini",
-    messages: [{ role: "system", content: systemPrompt }],
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Challenge scenario: ${scenario}\n\nMy response: ${userResponse}` },
+    ],
     max_tokens: 500,
     temperature: 0.7,
   });
