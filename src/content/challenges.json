@@ -1,114 +1,32 @@
 [
-  {
-    "id": "day-001",
-    "prompt_zh": "你在星巴克，想点一杯热美式，不加糖。",
-    "prompt_en": "You're at Starbucks. Order a hot Americano, no sugar.",
-    "difficulty": "beginner",
-    "category": "coffee_shop",
-    "culture_tip": "In China, the barista might ask '要大杯还是中杯？' (dà bēi háishì zhōng bēi?) — 'Grande or medium?' Chinese Starbucks sizes work differently!"
-  },
-  {
-    "id": "day-002",
-    "prompt_zh": "出租车司机问你去哪里，告诉他你要去最近的地铁站。",
-    "prompt_en": "The taxi driver asks where you're going. Tell him you want to go to the nearest metro station.",
-    "difficulty": "beginner",
-    "category": "taxi",
-    "culture_tip": "Many Chinese taxi drivers will try to chat with you! '你是哪国人？' (nǐ shì nǎ guó rén?) — 'What country are you from?' is a very common question."
-  },
-  {
-    "id": "day-003",
-    "prompt_zh": "你在餐馆，想问服务员有没有不辣的菜。",
-    "prompt_en": "You're at a restaurant. Ask the waiter if they have any non-spicy dishes.",
-    "difficulty": "beginner",
-    "category": "restaurant",
-    "culture_tip": "'不要辣' (bú yào là) literally means 'don't want spicy.' But in Sichuan, even '微辣' (wēi là / slightly spicy) can be intense for foreigners!"
-  },
-  {
-    "id": "day-004",
-    "prompt_zh": "你的中国同事问你周末做了什么，告诉他你去爬山了。",
-    "prompt_en": "Your Chinese colleague asks what you did this weekend. Tell them you went hiking.",
-    "difficulty": "beginner",
-    "category": "social"
-  },
-  {
-    "id": "day-005",
-    "prompt_zh": "你在菜市场买水果，问老板西瓜多少钱一斤。",
-    "prompt_en": "You're at the fruit market. Ask the vendor how much watermelon costs per jin (500g).",
-    "difficulty": "beginner",
-    "category": "market",
-    "culture_tip": "China uses 斤 (jīn) not kilograms for produce. 1 斤 = 500 grams. '多少钱一斤？' (duōshao qián yì jīn?) is the magic phrase!"
-  },
-  {
-    "id": "day-006",
-    "prompt_zh": "你感冒了，去药店买感冒药，告诉店员你的症状。",
-    "prompt_en": "You have a cold. Go to the pharmacy and describe your symptoms to buy cold medicine.",
-    "difficulty": "intermediate",
-    "category": "hospital"
-  },
-  {
-    "id": "day-007",
-    "prompt_zh": "你要迟到了，给同事发微信说你在路上，大概还要20分钟。",
-    "prompt_en": "You're running late. Send a WeChat message to your colleague saying you're on the way and need about 20 more minutes.",
-    "difficulty": "beginner",
-    "category": "business",
-    "culture_tip": "'在路上了' (zài lù shàng le) is the universal Chinese excuse — it literally means 'already on the road.' Everyone uses it, even if they haven't left yet 😄"
-  },
-  {
-    "id": "day-008",
-    "prompt_zh": "商务晚宴上，你的中国合作伙伴给你倒酒，你想礼貌地拒绝。",
-    "prompt_en": "At a business dinner, your Chinese partner pours you a drink. You want to politely decline.",
-    "difficulty": "intermediate",
-    "category": "business",
-    "culture_tip": "Declining a drink in China requires finesse. '不好意思，我明天一早有飞机' (sorry, I have an early flight tomorrow) is a face-saving excuse that works well."
-  },
-  {
-    "id": "day-009",
-    "prompt_zh": "你想在淘宝上买东西，问中国朋友怎么用。",
-    "prompt_en": "You want to buy something on Taobao. Ask your Chinese friend how to use it.",
-    "difficulty": "intermediate",
-    "category": "social"
-  },
-  {
-    "id": "day-010",
-    "prompt_zh": "打电话给房东，告诉他空调坏了，请他找人来修。",
-    "prompt_en": "Call your landlord and tell them the AC is broken. Ask them to send someone to fix it.",
-    "difficulty": "intermediate",
-    "category": "free"
-  },
-  {
-    "id": "day-011",
-    "prompt_zh": "春节到了，给你的中国朋友发一条拜年的微信。",
-    "prompt_en": "It's Chinese New Year! Send a festive greeting message to your Chinese friend on WeChat.",
-    "difficulty": "beginner",
-    "category": "family",
-    "culture_tip": "春节快乐 (chūn jié kuài lè) works, but 新年快乐，万事如意 adds warmth. For elders, add 身体健康 (shēntǐ jiànkāng — good health)."
-  },
-  {
-    "id": "day-012",
-    "prompt_zh": "你在网上看到一个很搞笑的视频，想用中文描述给朋友听。",
-    "prompt_en": "You saw a hilarious video online. Describe it to your friend in Chinese.",
-    "difficulty": "intermediate",
-    "category": "social"
-  },
-  {
-    "id": "day-013",
-    "prompt_zh": "你的中国朋友问你家乡的天气怎么样，跟中国比有什么不同。",
-    "prompt_en": "Your Chinese friend asks about the weather in your hometown and how it compares to China.",
-    "difficulty": "beginner",
-    "category": "social"
-  },
-  {
-    "id": "day-014",
-    "prompt_zh": "你要搬家了，需要叫一辆搬家公司的车。打电话预约。",
-    "prompt_en": "You're moving. Call a moving company to book a truck.",
-    "difficulty": "advanced",
-    "category": "free"
-  },
-  {
-    "id": "day-015",
-    "prompt_zh": "在公司会议上，用中文介绍你负责的项目进展。",
-    "prompt_en": "In a company meeting, present your project progress in Chinese.",
-    "difficulty": "advanced",
-    "category": "business"
-  }
+  {"id": "day-001", "prompt_zh": "你在星巴克，想点一杯热美式，不加糖。", "prompt_en": "You're at Starbucks. Order a hot Americano, no sugar.", "difficulty": "beginner", "category": "coffee_shop", "culture_tip": "In China, the barista might ask '要大杯还是中杯？' (dà bēi háishì zhōng bēi?) — 'Grande or medium?' Chinese Starbucks sizes work differently!"},
+  {"id": "day-002", "prompt_zh": "出租车司机问你去哪里，告诉他你要去最近的地铁站。", "prompt_en": "The taxi driver asks where you're going. Tell him you want to go to the nearest metro station.", "difficulty": "beginner", "category": "taxi", "culture_tip": "Many Chinese taxi drivers will try to chat with you! '你是哪国人？' (nǐ shì nǎ guó rén?) — 'What country are you from?' is a very common question."},
+  {"id": "day-003", "prompt_zh": "你在餐馆，想问服务员有没有不辣的菜。", "prompt_en": "You're at a restaurant. Ask the waiter if they have any non-spicy dishes.", "difficulty": "beginner", "category": "restaurant", "culture_tip": "'不要辣' (bú yào là) literally means 'don't want spicy.' But in Sichuan, even '微辣' (wēi là / slightly spicy) can be intense for foreigners!"},
+  {"id": "day-004", "prompt_zh": "你的中国同事问你周末做了什么，告诉他你去爬山了。", "prompt_en": "Your Chinese colleague asks what you did this weekend. Tell them you went hiking.", "difficulty": "beginner", "category": "social"},
+  {"id": "day-005", "prompt_zh": "你在菜市场买水果，问老板西瓜多少钱一斤。", "prompt_en": "You're at the fruit market. Ask the vendor how much watermelon costs per jin (500g).", "difficulty": "beginner", "category": "market", "culture_tip": "China uses 斤 (jīn) not kilograms for produce. 1 斤 = 500 grams. '多少钱一斤？' (duōshao qián yì jīn?) is the magic phrase!"},
+  {"id": "day-006", "prompt_zh": "你感冒了，去药店买感冒药，告诉店员你的症状。", "prompt_en": "You have a cold. Go to the pharmacy and describe your symptoms to buy cold medicine.", "difficulty": "intermediate", "category": "hospital"},
+  {"id": "day-007", "prompt_zh": "你要迟到了，给同事发微信说你在路上，大概还要20分钟。", "prompt_en": "You're running late. Send a WeChat message to your colleague saying you're on the way and need about 20 more minutes.", "difficulty": "beginner", "category": "business", "culture_tip": "'在路上了' (zài lù shàng le) is the universal Chinese excuse — it literally means 'already on the road.' Everyone uses it, even if they haven't left yet!"},
+  {"id": "day-008", "prompt_zh": "商务晚宴上，你的中国合作伙伴给你倒酒，你想礼貌地拒绝。", "prompt_en": "At a business dinner, your Chinese partner pours you a drink. You want to politely decline.", "difficulty": "intermediate", "category": "business", "culture_tip": "Declining a drink in China requires finesse. '不好意思，我明天一早有飞机' (sorry, I have an early flight tomorrow) is a face-saving excuse that works well."},
+  {"id": "day-009", "prompt_zh": "你想在淘宝上买东西，问中国朋友怎么用。", "prompt_en": "You want to buy something on Taobao. Ask your Chinese friend how to use it.", "difficulty": "intermediate", "category": "social"},
+  {"id": "day-010", "prompt_zh": "打电话给房东，告诉他空调坏了，请他找人来修。", "prompt_en": "Call your landlord and tell them the AC is broken. Ask them to send someone to fix it.", "difficulty": "intermediate", "category": "free"},
+  {"id": "day-011", "prompt_zh": "春节到了，给你的中国朋友发一条拜年的微信。", "prompt_en": "It's Chinese New Year! Send a festive greeting message to your Chinese friend on WeChat.", "difficulty": "beginner", "category": "family", "culture_tip": "春节快乐 (chūn jié kuài lè) works, but 新年快乐，万事如意 adds warmth. For elders, add 身体健康 (shēntǐ jiànkāng — good health)."},
+  {"id": "day-012", "prompt_zh": "你在网上看到一个很搞笑的视频，想用中文描述给朋友听。", "prompt_en": "You saw a hilarious video online. Describe it to your friend in Chinese.", "difficulty": "intermediate", "category": "social"},
+  {"id": "day-013", "prompt_zh": "你的中国朋友问你家乡的天气怎么样，跟中国比有什么不同。", "prompt_en": "Your Chinese friend asks about the weather in your hometown and how it compares to China.", "difficulty": "beginner", "category": "social"},
+  {"id": "day-014", "prompt_zh": "你要搬家了，需要叫一辆搬家公司的车。打电话预约。", "prompt_en": "You're moving. Call a moving company to book a truck.", "difficulty": "advanced", "category": "free"},
+  {"id": "day-015", "prompt_zh": "在公司会议上，用中文介绍你负责的项目进展。", "prompt_en": "In a company meeting, present your project progress in Chinese.", "difficulty": "advanced", "category": "business"},
+  {"id": "day-016", "prompt_zh": "你上了出租车，告诉司机你要去火车站，问大概多少钱。", "prompt_en": "You get in a taxi. Tell the driver you want to go to the train station and ask how much it costs.", "difficulty": "beginner", "category": "taxi", "culture_tip": "师傅 (shī fu) is the respectful way to address a taxi driver — it works for both male and female drivers. Never say 司机 directly to their face!"},
+  {"id": "day-017", "prompt_zh": "你有一个大行李箱，请出租车司机帮你打开后备箱。", "prompt_en": "You have a big suitcase. Ask the taxi driver to open the trunk for you.", "difficulty": "beginner", "category": "taxi", "culture_tip": "'能帮我吗？' (néng bāng wǒ ma?) — 'Can you help me?' is one of the most useful phrases in China. People are generally very willing to help!"},
+  {"id": "day-018", "prompt_zh": "到了目的地，你想用微信支付，问司机可不可以。", "prompt_en": "You've arrived. Ask the driver if you can pay with WeChat Pay.", "difficulty": "beginner", "category": "taxi", "culture_tip": "Almost everywhere in mainland China accepts WeChat Pay. But some small vendors prefer it over Alipay because Alipay's 花呗 (Huabei) credit feature delays their payment."},
+  {"id": "day-019", "prompt_zh": "你在餐馆，想让服务员推荐他们的招牌菜。", "prompt_en": "At a restaurant, ask the waiter to recommend their signature dishes.", "difficulty": "beginner", "category": "restaurant", "culture_tip": "'招牌菜' (zhāo pái cài) means signature dish. '你有什么推荐菜吗？' is the magic phrase. The dishes at the top of the menu are usually the house specialties."},
+  {"id": "day-020", "prompt_zh": "你不能吃辣，但朋友带你去了一家川菜馆，告诉服务员你的需求。", "prompt_en": "You can't eat spicy food, but your friend took you to a Sichuan restaurant. Tell the waiter about your needs.", "difficulty": "intermediate", "category": "restaurant", "culture_tip": "Chinese has 5 basic flavors: 酸甜苦辣咸 (sour, sweet, bitter, spicy, salty). Shanghai food tends to be 酸甜 (sour-sweet). Just say '我不吃辣' and you'll be understood!"},
+  {"id": "day-021", "prompt_zh": "你去看牙医，需要描述你的牙什么时候开始疼、是什么样的疼。", "prompt_en": "You're at the dentist. Describe when your tooth started hurting and what kind of pain it is.", "difficulty": "intermediate", "category": "hospital", "culture_tip": "'刺痛' (cì tòng) means sharp/stinging pain, '酸痛' (suān tòng) means a dull ache. Describing pain precisely helps doctors diagnose faster — and it's great Chinese practice!"},
+  {"id": "day-022", "prompt_zh": "今天是阴天，你的中国同事跟你聊天气，用中文回应。", "prompt_en": "It's an overcast day. Your Chinese colleague chats about the weather. Respond in Chinese.", "difficulty": "beginner", "category": "social", "culture_tip": "'阴天' (yīn tiān) means overcast/cloudy. In Shanghai, you'll use this word A LOT — the city has many overcast days, especially in spring!"},
+  {"id": "day-023", "prompt_zh": "清明节快到了，你的中国朋友要回老家，问他清明节是什么意思。", "prompt_en": "Qingming Festival is coming. Your Chinese friend is going back to their hometown. Ask them what Qingming means.", "difficulty": "intermediate", "category": "family", "culture_tip": "During 清明节, 劳动节, 国庆节, and 春节 — China's 4 major holidays — all highways are FREE! That's why you see massive traffic jams during these periods."},
+  {"id": "day-024", "prompt_zh": "你想用支付宝的花呗功能，问中国朋友花呗是怎么用的。", "prompt_en": "You want to use Alipay's Huabei feature. Ask your Chinese friend how it works.", "difficulty": "intermediate", "category": "social", "culture_tip": "花呗 (Huā Bēi) is like a built-in credit card in Alipay. Pay this month, repay by end of next month — zero interest if you pay in full! China has 200M+ freelancers who can't easily get bank credit cards, so Huabei fills the gap."},
+  {"id": "day-025", "prompt_zh": "你按摩的时候，按摩师问你舒不舒服，用中文回答。", "prompt_en": "During a massage, the masseuse asks if you're comfortable. Answer in Chinese.", "difficulty": "beginner", "category": "free", "culture_tip": "Three similar-sounding words that confuse learners: 师傅 (shī fu, master/driver), 沙发 (shā fā, sofa), 舒服 (shū fu, comfortable). In Chinese, adjectives don't need a 'be' verb — just say '我很舒服' (I very comfortable), NOT '我是舒服'."},
+  {"id": "day-026", "prompt_zh": "你想跟朋友说上海很大，但你不确定中文语法对不对。试着说说看。", "prompt_en": "You want to tell your friend that Shanghai is big. Try saying it in Chinese — and think about whether you need a 'be' verb.", "difficulty": "beginner", "category": "free", "culture_tip": "Key Chinese grammar insight: adjectives don't use 'be' verbs! Say '上海大' or '上海很大' — NOT '上海是大'. Only nouns need 是: '我是Tony' (I am Tony). This is one of the biggest differences from English!"},
+  {"id": "day-027", "prompt_zh": "你想说'我妈妈'和'我的公司'，想想什么时候可以省略'的'。", "prompt_en": "Practice saying 'my mom' and 'my company' in Chinese. Think about when you can drop '的' (de).", "difficulty": "beginner", "category": "free", "culture_tip": "For family members, you can skip 的: '我妈' (my mom), '我爸' (my dad). But for things, you must keep it: '我的公司' (my company), '我的手机' (my phone). This shortcut makes you sound more natural!"},
+  {"id": "day-028", "prompt_zh": "你和朋友去吃火锅，想要鸳鸯锅（一半辣一半不辣），用中文点。", "prompt_en": "You're going for hotpot with friends. Order a yuan-yang pot (half spicy, half mild).", "difficulty": "intermediate", "category": "restaurant", "culture_tip": "'鸳鸯锅' (yuān yang guō) means 'mandarin duck pot' — half spicy red broth, half mild clear broth. It's the diplomatic solution when friends have different spice tolerance!"},
+  {"id": "day-029", "prompt_zh": "你的中国朋友向你推荐皮蛋，你从没吃过，问他这是什么做的。", "prompt_en": "Your Chinese friend recommends century egg (皮蛋). You've never tried it. Ask what it's made of.", "difficulty": "intermediate", "category": "restaurant", "culture_tip": "皮蛋 (pí dàn) is made from duck eggs preserved in a special mixture. It's often served as a cold appetizer (凉菜) with vinegar and chili. Many foreigners are surprised to discover they actually like it!"},
+  {"id": "day-030", "prompt_zh": "你想向外国朋友解释中国的高铁有多快多方便，用中文练习说。", "prompt_en": "You want to explain to a foreign friend how fast and convenient China's high-speed rail is. Practice in Chinese.", "difficulty": "advanced", "category": "social", "culture_tip": "Shanghai to Hangzhou by high-speed rail: about 1 hour, very convenient. Chinese people often say '坐高铁' (take the high-speed rail) the way Americans say 'take an Uber' — it's become the default inter-city travel mode."}
 ]

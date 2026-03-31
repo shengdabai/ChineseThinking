@@ -16,16 +16,16 @@ export default function Home() {
 
         <div className="mt-10 flex flex-col gap-3 w-full max-w-xs">
           <Link
-            href="/chat"
+            href="/onboarding"
             className="flex items-center justify-center gap-2 rounded-xl bg-blue-600 text-white py-3.5 text-sm font-semibold hover:bg-blue-700 transition-colors"
           >
-            💬 Start Chatting
+            🚀 Get Started — Free
           </Link>
           <Link
-            href="/challenge"
+            href="/chat"
             className="flex items-center justify-center gap-2 rounded-xl bg-gray-100 text-gray-700 py-3.5 text-sm font-semibold hover:bg-gray-200 transition-colors"
           >
-            ⚡ Daily Challenge
+            💬 Jump to Chat
           </Link>
         </div>
 
