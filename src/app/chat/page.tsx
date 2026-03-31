@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from "react";
 import { ChatBubble } from "@/components/ChatBubble";
 import { Navigation } from "@/components/Navigation";
+import { Paywall } from "@/components/Paywall";
+import { TTSButton } from "@/components/TTS";
+import { consumeChat, getEntitlementStatus, checkProExpiry } from "@/lib/entitlement";
 
 type Message = { role: "user" | "assistant"; content: string };
 type Level = "beginner" | "intermediate" | "advanced";
@@ -26,7 +29,14 @@ export default function ChatPage() {
   const [level, setLevel] = useState<Level>("beginner");
   const [scenario, setScenario] = useState("free");
   const [showSettings, setShowSettings] = useState(false);
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [entitlement, setEntitlement] = useState({ chatsRemaining: 5, chatsUsed: 0, dailyLimit: 5, isPro: false, challengesRemaining: 3 });
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    checkProExpiry();
+    setEntitlement(getEntitlementStatus());
+  }, []);
 
   useEffect(() => {
     import("@/lib/storage").then(({ loadUser }) =>
@@ -42,6 +52,15 @@ export default function ChatPage() {
 
   async function handleSend() {
     if (!input.trim() || isLoading) return;
+
+    // Check entitlement
+    const { allowed } = consumeChat();
+    if (!allowed) {
+      setShowPaywall(true);
+      setEntitlement(getEntitlementStatus());
+      return;
+    }
+    setEntitlement(getEntitlementStatus());
 
     const userMessage: Message = { role: "user", content: input.trim() };
     const newMessages = [...messages, userMessage];
@@ -230,6 +249,26 @@ export default function ChatPage() {
           </button>
         </div>
       </div>
+
+      {/* Free usage indicator */}
+      {!entitlement.isPro && (
+        <div className="fixed bottom-32 left-0 right-0 flex justify-center pointer-events-none">
+          <span className={`text-xs px-3 py-1 rounded-full pointer-events-auto ${
+            entitlement.chatsRemaining <= 1 ? "bg-orange-100 text-orange-600" : "bg-gray-100 text-gray-500"
+          }`}>
+            {entitlement.chatsRemaining}/{entitlement.dailyLimit} free chats left today
+          </span>
+        </div>
+      )}
+
+      {/* Paywall modal */}
+      {showPaywall && (
+        <Paywall
+          chatsUsed={entitlement.chatsUsed}
+          dailyLimit={entitlement.dailyLimit}
+          onClose={() => setShowPaywall(false)}
+        />
+      )}
 
       <Navigation />
     </div>

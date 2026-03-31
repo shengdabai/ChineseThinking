@@ -1,5 +1,7 @@
 "use client";
 
+import { TTSButton } from "./TTS";
+
 interface ChatBubbleProps {
   role: "user" | "assistant";
   content: string;
@@ -7,6 +9,9 @@ interface ChatBubbleProps {
 
 export function ChatBubble({ role, content }: ChatBubbleProps) {
   const isUser = role === "user";
+
+  // Extract Chinese text for TTS (first line or first sentence with Chinese chars)
+  const chineseText = content.match(/[\u4e00-\u9fff]+[^\n]*/)?.[0] || "";
 
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4`}>
@@ -20,6 +25,11 @@ export function ChatBubble({ role, content }: ChatBubbleProps) {
         <div className="whitespace-pre-wrap text-sm leading-relaxed">
           {content}
         </div>
+        {!isUser && chineseText && (
+          <div className="mt-2 pt-2 border-t border-gray-200/50">
+            <TTSButton text={chineseText} />
+          </div>
+        )}
       </div>
     </div>
   );
