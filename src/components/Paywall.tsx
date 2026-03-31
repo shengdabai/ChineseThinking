@@ -44,7 +44,7 @@ export function Paywall({ chatsUsed, dailyLimit, onClose }: PaywallProps) {
               <span className="text-gray-500 text-sm">/month</span>
             </div>
             <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full font-medium">
-              95% of users upgrade
+              Recommended
             </span>
           </div>
           <ul className="mt-3 space-y-1.5 text-sm text-gray-700">
@@ -56,7 +56,10 @@ export function Paywall({ chatsUsed, dailyLimit, onClose }: PaywallProps) {
           </ul>
         </div>
 
-        <button className="w-full mt-4 rounded-xl bg-blue-600 text-white py-3.5 text-sm font-bold hover:bg-blue-700 transition-colors">
+        <button
+          onClick={() => alert("Payment integration coming soon! For now, enjoy your free daily chats.")}
+          className="w-full mt-4 rounded-xl bg-blue-600 text-white py-3.5 text-sm font-bold hover:bg-blue-700 transition-colors"
+        >
           Upgrade to Pro — $9.99/mo
         </button>
 

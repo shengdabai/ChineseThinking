@@ -62,10 +62,11 @@ export default function ChatPage() {
     }
     setEntitlement(getEntitlementStatus());
 
-    const userMessage: Message = { role: "user", content: input.trim() };
+    const userText = input.trim();
+    const userMessage: Message = { role: "user", content: userText };
     const newMessages = [...messages, userMessage];
     setMessages(newMessages);
-    setInput("");
+    // Keep input until success so user can retry on failure
     setIsLoading(true);
     setShowSettings(false);
 
@@ -112,6 +113,8 @@ export default function ChatPage() {
           }
         }
       }
+      // Success — clear input
+      setInput("");
     } catch {
       setMessages((prev) => [
         ...prev.filter((m) => m.content !== ""),
@@ -120,6 +123,8 @@ export default function ChatPage() {
           content: "Sorry, something went wrong. Please try again! 再试一次吧！",
         },
       ]);
+      // Failure — restore input so user can retry
+      setInput(userText);
     } finally {
       setIsLoading(false);
     }
