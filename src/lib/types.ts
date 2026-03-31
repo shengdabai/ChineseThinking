@@ -41,11 +41,19 @@ export interface Conversation {
 export interface ChallengeScenario {
   id: string;
   prompt_zh: string;
-  prompt_en: string;
+  prompt_pinyin?: string;
+  prompt_en?: string;
   difficulty: UserLevel;
   category: string;
   culture_tip?: string;
+  hint_zh?: string;
+  hint_pinyin?: string;
+  hint_en?: string;
 }
+// Display rules per level:
+// A (beginner):  show pinyin + English translation, hide hanzi
+// B (intermediate): show pinyin + hanzi mixed, English translation available
+// C (advanced): show hanzi only, no pinyin, no English
 
 export interface ChallengeSubmission {
   id: string;

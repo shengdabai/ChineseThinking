@@ -9,11 +9,21 @@ type Level = "beginner" | "intermediate" | "advanced";
 interface Challenge {
   id: string;
   prompt_zh: string;
-  prompt_en: string;
+  prompt_pinyin?: string;
+  prompt_en?: string;
   difficulty: string;
   category: string;
   culture_tip?: string;
+  hint_zh?: string;
+  hint_pinyin?: string;
+  hint_en?: string;
 }
+
+const LEVEL_LABELS: Record<Level, { label: string; tag: string; desc: string }> = {
+  beginner: { label: "Level A", tag: "A", desc: "Pinyin + English" },
+  intermediate: { label: "Level B", tag: "B", desc: "Pinyin + 汉字" },
+  advanced: { label: "Level C", tag: "C", desc: "纯中文" },
+};
 
 export default function ChallengePage() {
   const [challenge, setChallenge] = useState<Challenge | null>(null);
@@ -102,18 +112,14 @@ export default function ChallengePage() {
           {(["beginner", "intermediate", "advanced"] as Level[]).map((l) => (
             <button
               key={l}
-              onClick={() => setLevel(l)}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+              onClick={() => { setLevel(l); loadChallenge(); }}
+              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 level === l
                   ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-500"
               }`}
             >
-              {l === "beginner"
-                ? "Beginner"
-                : l === "intermediate"
-                  ? "Intermediate"
-                  : "Advanced"}
+              {LEVEL_LABELS[l].tag} · {l === "beginner" ? "Beginner" : l === "intermediate" ? "Intermediate" : "Advanced"}
             </button>
           ))}
         </div>
@@ -122,17 +128,55 @@ export default function ChallengePage() {
       <div className="flex-1 px-4 py-6 space-y-6">
         {challenge ? (
           <>
-            {/* Challenge card */}
+            {/* Challenge card - ABC level display */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6">
-              <p className="text-xs font-medium text-blue-500 uppercase tracking-wide mb-2">
-                Today&apos;s Challenge
-              </p>
-              <p className="text-lg font-medium text-gray-900 leading-relaxed">
-                {challenge.prompt_en}
-              </p>
-              <p className="text-sm text-gray-500 mt-2">
-                {challenge.prompt_zh}
-              </p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xs font-medium text-blue-500 uppercase tracking-wide">
+                  Today&apos;s Challenge
+                </p>
+                <span className="text-xs font-bold bg-blue-600 text-white px-2 py-0.5 rounded">
+                  {LEVEL_LABELS[level].tag} · {LEVEL_LABELS[level].desc}
+                </span>
+              </div>
+
+              {/* Level A: Pinyin primary + English translation */}
+              {level === "beginner" && (
+                <>
+                  {challenge.prompt_en && (
+                    <p className="text-lg font-medium text-gray-900 leading-relaxed">
+                      {challenge.prompt_en}
+                    </p>
+                  )}
+                  {challenge.prompt_pinyin && (
+                    <p className="text-base text-blue-600 mt-2 font-medium">
+                      {challenge.prompt_pinyin}
+                    </p>
+                  )}
+                  <p className="text-sm text-gray-400 mt-1">{challenge.prompt_zh}</p>
+                </>
+              )}
+
+              {/* Level B: Hanzi + Pinyin mixed, English available */}
+              {level === "intermediate" && (
+                <>
+                  <p className="text-lg font-medium text-gray-900 leading-relaxed">
+                    {challenge.prompt_zh}
+                  </p>
+                  {challenge.prompt_pinyin && (
+                    <p className="text-sm text-blue-500 mt-1">{challenge.prompt_pinyin}</p>
+                  )}
+                  {challenge.prompt_en && (
+                    <p className="text-sm text-gray-400 mt-2 italic">{challenge.prompt_en}</p>
+                  )}
+                </>
+              )}
+
+              {/* Level C: Pure Chinese only */}
+              {level === "advanced" && (
+                <p className="text-lg font-medium text-gray-900 leading-relaxed">
+                  {challenge.prompt_zh}
+                </p>
+              )}
             </div>
 
             {/* Culture tip */}
