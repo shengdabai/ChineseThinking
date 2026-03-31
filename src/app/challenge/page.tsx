@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
+import { loadUser, updateStreak, markChallengeComplete } from "@/lib/storage";
 
 type Level = "beginner" | "intermediate" | "advanced";
 
@@ -25,13 +26,11 @@ export default function ChallengePage() {
 
   useEffect(() => {
     loadChallenge();
-    const savedStreak = localStorage.getItem("ct-streak");
-    const lastDate = localStorage.getItem("ct-streak-date");
-    const today = new Date().toDateString();
-    if (savedStreak && lastDate === today) {
-      setStreak(parseInt(savedStreak));
-    }
-  }, [level]);
+    loadUser().then((user) => {
+      setStreak(user.streak_days);
+      if (user.level) setLevel(user.level);
+    });
+  }, []);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -70,19 +69,10 @@ export default function ChallengePage() {
       setFeedback(data.feedback);
       setIsSubmitted(true);
 
-      // Update streak
-      const today = new Date().toDateString();
-      const lastDate = localStorage.getItem("ct-streak-date");
-      const yesterday = new Date(Date.now() - 86400000).toDateString();
-      let newStreak = 1;
-      if (lastDate === yesterday) {
-        newStreak = streak + 1;
-      } else if (lastDate === today) {
-        newStreak = streak;
-      }
+      // Update streak and mark complete
+      const newStreak = await updateStreak();
       setStreak(newStreak);
-      localStorage.setItem("ct-streak", String(newStreak));
-      localStorage.setItem("ct-streak-date", today);
+      if (challenge) await markChallengeComplete(challenge.id);
     } catch {
       setFeedback("Something went wrong. Try again!");
     } finally {

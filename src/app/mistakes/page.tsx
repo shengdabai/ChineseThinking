@@ -1,26 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
-
-interface Mistake {
-  wrong: string;
-  correct: string;
-  context: string;
-  date: string;
-}
+import { getMistakes } from "@/lib/storage";
+import type { MistakeEntry } from "@/lib/types";
 
 export default function MistakesPage() {
-  // MVP: localStorage-based mistake tracking
-  const [mistakes] = useState<Mistake[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const saved = localStorage.getItem("ct-mistakes");
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [mistakes, setMistakes] = useState<MistakeEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getMistakes().then((data) => {
+      setMistakes(data);
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen bg-white pb-20">
@@ -32,7 +26,11 @@ export default function MistakesPage() {
       </header>
 
       <div className="flex-1 px-4 py-6">
-        {mistakes.length === 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center h-40">
+            <p className="text-gray-400">Loading...</p>
+          </div>
+        ) : mistakes.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-64 text-center">
             <p className="text-4xl mb-3">🎯</p>
             <p className="text-gray-600 font-medium">No mistakes yet!</p>
@@ -44,21 +42,24 @@ export default function MistakesPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {mistakes.map((m, i) => (
+            <p className="text-xs text-gray-400 mb-2">
+              {mistakes.length} mistake{mistakes.length > 1 ? "s" : ""} recorded
+            </p>
+            {mistakes.map((m) => (
               <div
-                key={i}
+                key={m.id}
                 className="rounded-xl border border-gray-100 p-4 space-y-2"
               >
                 <div className="flex items-start gap-2">
                   <span className="text-red-400 text-xs mt-0.5">✗</span>
                   <p className="text-sm text-red-600 line-through">
-                    {m.wrong}
+                    {m.wrong_text}
                   </p>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500 text-xs mt-0.5">✓</span>
                   <p className="text-sm text-green-700 font-medium">
-                    {m.correct}
+                    {m.correct_text}
                   </p>
                 </div>
                 <p className="text-xs text-gray-400 pl-5">{m.context}</p>

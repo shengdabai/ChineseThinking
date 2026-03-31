@@ -64,11 +64,10 @@ export default function OnboardingPage() {
   const [persona, setPersona] = useState<Persona | null>(null);
   const [level, setLevel] = useState<Level | null>(null);
 
-  function handleComplete() {
+  async function handleComplete() {
     if (!persona || !level) return;
-    localStorage.setItem("ct-persona", persona);
-    localStorage.setItem("ct-level", level);
-    localStorage.setItem("ct-onboarded", "true");
+    const { saveUser } = await import("@/lib/storage");
+    await saveUser({ persona, level, onboarded: true });
     router.push("/chat");
   }
 

@@ -29,6 +29,14 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    import("@/lib/storage").then(({ loadUser }) =>
+      loadUser().then((user) => {
+        if (user.level) setLevel(user.level);
+      })
+    );
+  }, []);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
