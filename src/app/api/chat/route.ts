@@ -1,9 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { chatWithAI } from "@/lib/ai";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { ChatMessage, UserLevel } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 30 requests per minute per IP
+    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    const { allowed, remaining } = checkRateLimit(ip, 30, 60000);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Too many requests. Please wait a moment." },
+        { status: 429, headers: { "Retry-After": "60", "X-RateLimit-Remaining": "0" } }
+      );
+    }
+
     const body = await request.json();
     const {
       messages,
