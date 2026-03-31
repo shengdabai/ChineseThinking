@@ -5,13 +5,27 @@ import type { ChatMessage, UserLevel } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
   try {
+    // Get IP (prefer Vercel trusted header)
+    const ip = request.headers.get("x-vercel-forwarded-for")
+      || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      || "unknown";
+
     // Rate limit: 30 requests per minute per IP
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
-    const { allowed, remaining } = checkRateLimit(ip, 30, 60000);
+    const { allowed } = checkRateLimit(ip, 30, 60000);
     if (!allowed) {
       return NextResponse.json(
         { error: "Too many requests. Please wait a moment." },
-        { status: 429, headers: { "Retry-After": "60", "X-RateLimit-Remaining": "0" } }
+        { status: 429, headers: { "Retry-After": "60" } }
+      );
+    }
+
+    // Server-side daily entitlement check (prevents localStorage bypass)
+    const dailyKey = `daily:${ip}:${new Date().toISOString().split("T")[0]}`;
+    const { allowed: dailyAllowed } = checkRateLimit(dailyKey, 50, 86400000);
+    if (!dailyAllowed) {
+      return NextResponse.json(
+        { error: "Daily free limit reached. Upgrade to Pro for unlimited access.", upgrade: true },
+        { status: 402 }
       );
     }
 
@@ -47,6 +61,14 @@ export async function POST(request: NextRequest) {
     }
     if (!VALID_SCENARIOS.includes(scenario)) {
       return NextResponse.json({ error: "Invalid scenario" }, { status: 400 });
+    }
+
+    // Validate message roles (prevent role injection)
+    const VALID_ROLES = new Set(["user", "assistant"]);
+    for (const msg of messages) {
+      if (!VALID_ROLES.has(msg.role)) {
+        return NextResponse.json({ error: "Invalid message role" }, { status: 400 });
+      }
     }
 
     const lastMessage = messages[messages.length - 1];
