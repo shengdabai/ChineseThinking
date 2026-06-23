@@ -7,7 +7,7 @@ AI-powered Chinese learning platform that teaches Chinese thinking patterns, not
 Core: AI conversation partner + daily micro-challenges.
 
 ## Tech Stack
-- Next.js 16 (App Router, TypeScript, Tailwind CSS)
+- Next.js 15/16-canary (App Router, TypeScript, Tailwind CSS)
 - Bun as package manager and runtime
 - PWA-ready web app
 
@@ -33,7 +33,7 @@ src/
 ```
 
 ## Design Doc
-Product design document: ~/.gstack/projects/chinese-learning-app/adam-main-design-20260330-143000.md
+Product design document lives in the local gstack project directory (machine-local path, not committed).
 
 ## Key Principles
 - Encourage expression, never punish errors

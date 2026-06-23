@@ -222,7 +222,7 @@ export async function updateStreak(): Promise<number> {
   return newStreak;
 }
 
-export async function markChallengeComplete(challengeId: string): Promise<void> {
+export async function markChallengeComplete(challengeId: string, userResponse?: string): Promise<void> {
   const user = localLoadUser();
   if (!user.challenge_history.includes(challengeId)) {
     user.challenge_history = [challengeId, ...user.challenge_history].slice(0, 500);
@@ -239,7 +239,8 @@ export async function markChallengeComplete(challengeId: string): Promise<void> 
         await sb.from("challenge_completions").insert({
           user_id: authUser.id,
           challenge_id: challengeId,
-          user_response: "",
+          // Pass actual user response; fall back to null so the column stays nullable
+          user_response: userResponse ?? null,
         });
       }
     } catch { /* local fallback already done */ }

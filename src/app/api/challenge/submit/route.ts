@@ -8,7 +8,11 @@ const VALID_LEVELS = ["beginner", "intermediate", "advanced"];
 export async function POST(request: NextRequest) {
   try {
     // Rate limit: 20 requests per minute per IP
-    const ip = request.headers.get("x-forwarded-for") || request.headers.get("x-real-ip") || "unknown";
+    // Prefer Vercel's trusted header (consistent with chat/route.ts)
+    const ip = request.headers.get("x-vercel-forwarded-for")
+      || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      || request.headers.get("x-real-ip")
+      || "unknown";
     const { allowed } = checkRateLimit(ip, 20, 60000);
     if (!allowed) {
       return NextResponse.json(
