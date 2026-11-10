@@ -11,10 +11,7 @@ interface PaywallProps {
 export function Paywall({ chatsUsed, dailyLimit, onClose }: PaywallProps) {
   const [showReferral, setShowReferral] = useState(false);
 
-  const referralLink =
-    typeof window !== "undefined"
-      ? `${window.location.origin}?ref=${Math.random().toString(36).slice(2, 8)}`
-      : "";
+  const [referralLink, setReferralLink] = useState("");
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
@@ -66,7 +63,10 @@ export function Paywall({ chatsUsed, dailyLimit, onClose }: PaywallProps) {
         <div className="mt-3 text-center">
           {!showReferral ? (
             <button
-              onClick={() => setShowReferral(true)}
+              onClick={() => {
+                setReferralLink(`${window.location.origin}?ref=${crypto.randomUUID().slice(0, 8)}`);
+                setShowReferral(true);
+              }}
               className="text-xs text-blue-600 hover:underline"
             >
               Or invite a friend for 7 days free Pro →

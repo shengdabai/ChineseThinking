@@ -67,11 +67,11 @@ bun run lint
 | Command | Purpose |
 |---|---|
 | `bun install` | Install project dependencies. |
-| `bun run dev` | bun run browse/src/cli.ts |
-| `bun start` | bun run browse/src/server.ts |
-| `bun run build` | bun run gen:skill-docs && bun run gen:skill-docs --host codex && bun build --compile browse/src/cli.ts --ou... |
+| `bun run dev` | Start the Next.js development server. |
+| `bun start` | Start the production server after `bun run build`. |
+| `bun run build` | Build the Next.js production application. |
 | `bun run lint` | eslint |
-| `bun run test` | bun test browse/test/ test/ --ignore 'test/skill-e2e-*.test.ts' --ignore test/skill-llm-eval.test.ts --igno... |
+| `bun run test` | Run focused regression tests with Node.js 22.7 or later. |
 
 ## Operating Notes
 

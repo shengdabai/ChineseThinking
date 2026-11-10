@@ -13,7 +13,7 @@ if (typeof setInterval !== "undefined") {
     for (const [key, val] of requests) {
       if (now > val.resetTime) requests.delete(key);
     }
-  }, 5 * 60 * 1000);
+  }, 5 * 60 * 1000).unref?.();
 }
 
 export function checkRateLimit(
@@ -25,7 +25,14 @@ export function checkRateLimit(
   const key = ip;
   const entry = requests.get(key);
 
-  if (!entry || now > entry.resetTime) {
+  if (!entry || now >= entry.resetTime) {
+    // Bound memory even if many distinct clients arrive within one window.
+    if (!entry && requests.size >= 10000) {
+      for (const [key, value] of requests) {
+        if (now >= value.resetTime) requests.delete(key);
+      }
+      if (requests.size >= 10000) return { allowed: false, remaining: 0 };
+    }
     requests.set(key, { count: 1, resetTime: now + windowMs });
     return { allowed: true, remaining: maxRequests - 1 };
   }

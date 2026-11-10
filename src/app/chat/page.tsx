@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChatBubble } from "@/components/ChatBubble";
 import { Navigation } from "@/components/Navigation";
 import { Paywall } from "@/components/Paywall";
-import { TTSButton } from "@/components/TTS";
+import { readChatStream } from "@/lib/chat-stream";
 import { consumeChat, getEntitlementStatus, checkProExpiry } from "@/lib/entitlement";
 
 type Message = { role: "user" | "assistant"; content: string };
@@ -34,8 +34,11 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    checkProExpiry();
-    setEntitlement(getEntitlementStatus());
+    const timer = setTimeout(() => {
+      checkProExpiry();
+      setEntitlement(getEntitlementStatus());
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -79,39 +82,16 @@ export default function ChatPage() {
 
       if (!response.ok) throw new Error("Failed to get response");
 
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error("No reader");
-
-      const decoder = new TextDecoder();
+      if (!response.body) throw new Error("No response body");
       let assistantContent = "";
-
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n").filter((l) => l.startsWith("data: "));
-
-        for (const line of lines) {
-          const data = line.slice(6);
-          if (data === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(data);
-            assistantContent += parsed.text;
-            setMessages((prev) => {
-              const updated = [...prev];
-              updated[updated.length - 1] = {
-                role: "assistant",
-                content: assistantContent,
-              };
-              return updated;
-            });
-          } catch {
-            // skip malformed chunks
-          }
-        }
+      for await (const text of readChatStream(response.body)) {
+        assistantContent += text;
+        setMessages((prev) => {
+          const updated = [...prev];
+          updated[updated.length - 1] = { role: "assistant", content: assistantContent };
+          return updated;
+        });
       }
       // Success — clear input
       setInput("");

@@ -31,7 +31,7 @@ export function buildSystemPrompt(
 }
 
 export async function chatWithAI(
-  messages: ChatMessage[],
+  messages: Pick<ChatMessage, "role" | "content">[],
   level: UserLevel,
   scenario: string,
   userContext?: string
@@ -55,21 +55,27 @@ export async function chatWithAI(
   });
 
   const encoder = new TextEncoder();
+  let cancelled = false;
   return new ReadableStream({
     async start(controller) {
       try {
         for await (const chunk of response) {
+          if (cancelled) break;
           const text = chunk.choices[0]?.delta?.content;
           if (text) {
             controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
           }
         }
-        controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+        if (!cancelled) controller.enqueue(encoder.encode("data: [DONE]\n\n"));
       } catch {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: "Stream interrupted. Please try again." })}\n\n`));
+        if (!cancelled) controller.enqueue(encoder.encode(`data: ${JSON.stringify({ error: "Stream interrupted. Please try again." })}\n\n`));
       } finally {
-        controller.close();
+        if (!cancelled) controller.close();
       }
+    },
+    cancel() {
+      cancelled = true;
+      response.controller.abort();
     },
   });
 }
