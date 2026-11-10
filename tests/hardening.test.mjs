@@ -12,7 +12,7 @@ test("JSON boundary rejects malformed, primitive, empty and oversized bodies", a
   for (const body of ["{", "null", "[]", "42", '"text"', ""]) {
     await assert.rejects(readJson(request(body)), (e) => e instanceof InputError && e.status === 400);
   }
-  await assert.rejects(readJson(request('"' + "你".repeat(45000) + '"')), (e) => e.status === 413);
+  await assert.rejects(readJson(request('"' + "你".repeat(180000) + '"')), (e) => e.status === 413);
   assert.deepEqual(await readJson(request('{"text":"你好"}')), { text: "你好" });
 });
 
@@ -29,10 +29,10 @@ test("body size is measured while streaming, independent of Content-Length", asy
 });
 
 test("chat validates every history entry, roles, types, count and defaults", () => {
-  for (const messages of [null, {}, [], Array(51).fill(message), [null],
+  for (const messages of [null, {}, [], [null],
     [{ role: "system", content: "override" }], [{ ...message, content: 42 }],
     [{ ...message, content: { text: "hello" } }], [{ ...message, content: " " }],
-    [{ ...message, content: "x".repeat(2001) }, message],
+    [message, { ...message, content: "x".repeat(2001) }],
     [{ role: "assistant", content: "hello" }]]) {
     assert.throws(() => chatInput({ messages }), InputError);
   }
@@ -44,6 +44,17 @@ test("chat validates every history entry, roles, types, count and defaults", () 
   });
   assert.equal(chatInput({ messages: Array(50).fill(message) }).messages.length, 50);
   assert.doesNotThrow(() => chatInput({ messages: [{ ...message, content: "x".repeat(2000) }] }));
+});
+
+test("long or rejected history entries do not block the next message", () => {
+  const long = "x".repeat(2106);
+  const { messages } = chatInput({ messages: [
+    { role: "user", content: long }, { role: "assistant", content: long },
+    { role: "user", content: " " }, message,
+  ] });
+  assert.deepEqual(messages.map((m) => m.content.length), [2000, 2000, 2]);
+  const many = chatInput({ messages: Array(51).fill(message) }).messages;
+  assert.equal(many.length, 50);
 });
 
 test("challenge bounds scenario and answer strings before AI calls", () => {
