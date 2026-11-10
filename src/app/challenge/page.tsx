@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Navigation } from "@/components/Navigation";
 import { loadUser, updateStreak, markChallengeComplete } from "@/lib/storage";
+import { challengeFeedback } from "@/lib/challenge-feedback";
 
 type Level = "beginner" | "intermediate" | "advanced";
 
@@ -35,7 +36,6 @@ export default function ChallengePage() {
   const [streak, setStreak] = useState(0);
 
   useEffect(() => {
-    loadChallenge();
     loadUser().then((user) => {
       setStreak(user.streak_days);
       if (user.level) setLevel(user.level);
@@ -44,25 +44,34 @@ export default function ChallengePage() {
 
   const [error, setError] = useState<string | null>(null);
 
-  async function loadChallenge() {
+  const loadChallenge = useCallback(async (signal?: AbortSignal) => {
     setError(null);
+    setChallenge(null);
     try {
-      const res = await fetch(`/api/challenge/today?level=${level}`);
+      const res = await fetch(`/api/challenge/today?level=${level}`, { signal });
       if (!res.ok) throw new Error("Failed to load");
       const data = await res.json();
+      if (signal?.aborted) return;
       setChallenge(data.challenge);
       setIsSubmitted(false);
       setFeedback("");
       setInput("");
       window.scrollTo(0, 0);
     } catch {
-      setError("Could not load challenge. Check your connection and try again.");
+      if (!signal?.aborted) setError("Could not load challenge. Check your connection and try again.");
     }
-  }
+  }, [level]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const timer = setTimeout(() => void loadChallenge(controller.signal), 0);
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [loadChallenge]);
 
   async function handleSubmit() {
     if (!input.trim() || !challenge || isLoading) return;
     setIsLoading(true);
+    setError(null);
 
     try {
       const res = await fetch("/api/challenge/submit", {
@@ -75,16 +84,15 @@ export default function ChallengePage() {
         }),
       });
 
-      const data = await res.json();
-      setFeedback(data.feedback);
+      setFeedback(await challengeFeedback(res));
       setIsSubmitted(true);
 
       // Update streak and mark complete
       const newStreak = await updateStreak();
       setStreak(newStreak);
-      if (challenge) await markChallengeComplete(challenge.id);
+      if (challenge) await markChallengeComplete(challenge.id, input);
     } catch {
-      setFeedback("Something went wrong. Try again!");
+      setError("Something went wrong. Try again!");
     } finally {
       setIsLoading(false);
     }
@@ -112,7 +120,7 @@ export default function ChallengePage() {
           {(["beginner", "intermediate", "advanced"] as Level[]).map((l) => (
             <button
               key={l}
-              onClick={() => { setLevel(l); loadChallenge(); }}
+              onClick={() => setLevel(l)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 level === l
                   ? "bg-blue-600 text-white"
@@ -192,6 +200,7 @@ export default function ChallengePage() {
             )}
 
             {/* Input area */}
+            {error && <p role="alert" className="text-red-500 text-sm">{error}</p>}
             {!isSubmitted ? (
               <div className="space-y-3">
                 <textarea
@@ -221,7 +230,7 @@ export default function ChallengePage() {
                   </div>
                 </div>
                 <button
-                  onClick={loadChallenge}
+                  onClick={() => void loadChallenge()}
                   className="w-full rounded-xl bg-gray-100 text-gray-700 py-3 text-sm font-medium hover:bg-gray-200 transition-colors"
                 >
                   Try Another Challenge
@@ -235,7 +244,7 @@ export default function ChallengePage() {
               <>
                 <p className="text-red-500 text-sm">{error}</p>
                 <button
-                  onClick={loadChallenge}
+                  onClick={() => void loadChallenge()}
                   className="px-4 py-2 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700"
                 >
                   Retry

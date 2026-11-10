@@ -12,8 +12,14 @@ export default function DashboardPage() {
 
   useEffect(() => {
     checkProExpiry();
-    loadUser().then(setUser);
-    setEntitlement(getEntitlementStatus());
+    let active = true;
+    loadUser().then((data) => {
+      if (active) {
+        setUser(data);
+        setEntitlement(getEntitlementStatus());
+      }
+    });
+    return () => { active = false; };
   }, []);
 
   if (!user) {
